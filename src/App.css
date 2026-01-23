@@ -1,1 +1,45 @@
+#root {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  min-height: 100dvh;
+  background-color: rgb(48, 48, 48);
+  padding: 10px;
+}
 
+h1 {
+  color: whitesmoke;
+}
+
+.loading {
+  font-size: 2rem;
+  color: whitesmoke;
+}
+
+.grid {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  place-items: center;
+  gap: 20px;
+}
+
+.cell {
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+}
+
+.cell:hover {
+  cursor: pointer;
+}
+
+.cell img {
+  width: 200px;
+  height: 200px;
+}
+
+.score,
+.high-score {
+  color: whitesmoke;
+}
