@@ -9,38 +9,39 @@ function App() {
   function toggleMain() {
     setMain(!main);
   }
+
+  function handleDifficultySelect(diff) {
+    setDifficulty(diff);
+    toggleMain();
+  }
   
-  if (main) {
-    return (
-      <>
-        <h1 style={{ cursor: 'pointer' }}>Memory Card Game</h1>
-        <div>
-          <h2>Choose Difficulty:</h2>
-          <button onClick={() => {
-            setDifficulty(9);
-            toggleMain();
-            }}>Easy</button>
-          <button onClick={() => {
-            setDifficulty(16);
-            toggleMain();
-            }}>Normal</button>
-          <button onClick={() => {
-            setDifficulty(36);
-            toggleMain();
-            }}>Hard</button>
-        </div>
-      </>
-    )
-  } else {
-    return (
+  return (
     <>
-      <h1 onClick={() => {
-        toggleMain();
-        setDifficulty(null);
-      }} style={{ cursor: 'pointer' }}>Memory Card Game</h1>
-      <Game difficulty={difficulty} />
+      <header>
+        <h1 
+          onClick={() => main || toggleMain()} 
+          style={{ cursor: 'pointer' }}
+        >
+          Memory Card Game
+        </h1>
+      </header>
+      <main>
+        {main ? (
+          <>
+            <h2>Choose Difficulty:</h2>
+            <div className="buttons">
+              <button onClick={() => handleDifficultySelect(9)}>Easy</button>
+              <button onClick={() => handleDifficultySelect(16)}>Normal</button>
+              <button onClick={() => handleDifficultySelect(36)}>Hard</button>
+            </div>
+          </>
+        ) : (
+          <Game difficulty={difficulty} />
+        )}
+      </main>
+      <footer>Made by <a href="https://github.com/bowman025">bowman025</a>.</footer>
     </>
-  )}
+  );
 }
 
 export default App;
