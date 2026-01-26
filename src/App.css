@@ -17,24 +17,27 @@ h1 {
 }
 
 .grid {
-  width: fit-content;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   place-items: center;
   gap: 20px;
 }
 
-.cell {
+.card {
   padding: 0;
-  border: none;
+  border: 3px solid whitesmoke;
   border-radius: 10px;
+  transition: 0.1s transform ease-in-out;
 }
 
-.cell:hover {
+.card:hover {
   cursor: pointer;
+  /* transform-origin: left; */
+  transform: scale(1.05);
+  
 }
 
-.cell img {
+.card img {
   width: 200px;
   height: 200px;
 }
