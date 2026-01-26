@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import useSessionStorage from './useSessionStorage.jsx';
+import './Game.css';
 
 const shuffleArray = (arr) => {
   const shuffled = [...arr];
@@ -81,20 +82,23 @@ function Game({ difficulty }) {
         <div className="score">Score: {clicked.length}</div>
         <div className="high-score">High Score: {highScore}</div>
       </div>
-      <div className={`grid ${difficulty}`}>
+      <div className={`grid${difficulty}`}>
         {currentImages.map(image => 
-          <div key={image.id} 
-                  className="card" 
-                  onClick={() => handleClick(image.id)}>
-                    <img src={image.image_uris.art_crop} 
-                    alt="Random MtG Commander image" />
-          </div>)}
+          <div 
+            key={image.id} 
+            className="card"
+            onClick={() => handleClick(image.id)}
+          >
+            <img src={image.image_uris.art_crop} 
+                 alt="Random MtG Commander image" 
+            />
+          </div>
+        )}
       </div>
     </div>
   );
 
   function handleClick(id) {
-    console.log('Image id: ', id);
     if (!clicked.includes(id)) {
       const newClickedLength = clicked.length + 1;
       setClicked(clicked => [...clicked, id]);
@@ -104,7 +108,7 @@ function Game({ difficulty }) {
     } else {
       setClicked([]);
     }
-    randomizeImages();
+      randomizeImages();
   }
 
   function randomizeImages() {

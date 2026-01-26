@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Game from './Game.jsx';
-import './App.css'
+import './App.css';
 
 function App() {
   const [main, setMain] = useState(true);
@@ -22,19 +22,19 @@ function App() {
           onClick={() => main || toggleMain()} 
           style={{ cursor: 'pointer' }}
         >
-          Memory Card Game
+          <i>Magic</i>: The Memory Card Game
         </h1>
       </header>
       <main>
         {main ? (
-          <>
+          <div className="difficulty">
             <h2>Choose Difficulty:</h2>
             <div className="buttons">
               <button onClick={() => handleDifficultySelect(9)}>Easy</button>
               <button onClick={() => handleDifficultySelect(16)}>Normal</button>
               <button onClick={() => handleDifficultySelect(36)}>Hard</button>
             </div>
-          </>
+          </div>
         ) : (
           <Game difficulty={difficulty} />
         )}

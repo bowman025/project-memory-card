@@ -1,11 +1,22 @@
 #root {
+  width: 100%;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-  place-items: center;
-  min-height: 100dvh;
+  grid-template-areas: 
+    "header"
+    "main"
+    "footer";
   background-color: rgb(48, 48, 48);
-  padding: 10px;
+}
+
+header {
+  grid-area: header;
+  padding: 15px 0;
+  color: whitesmoke;
+  background-color: rgb(32, 32, 32);
+  text-align: center;
 }
 
 h1,
@@ -13,44 +24,44 @@ h2 {
   color: whitesmoke;
 }
 
-.loading,
-.error {
-  font-size: 2rem;
-  color: whitesmoke;
-}
-
-.grid {
+main {
+  grid-area: main;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
   place-items: center;
-  gap: 20px;
+  padding: 20px;
 }
 
-.card {
-  padding: 0;
-  border: 3px solid whitesmoke;
-  border-radius: 10px;
+.difficulty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 20px;
   transition: 0.1s transform ease-in-out;
 }
 
-.card:hover {
+button:hover {
   cursor: pointer;
+  opacity: 0.9;
+  outline: 1px solid red;
   transform: scale(1.05);
-  
-}
-
-.card img {
-  width: 200px;
-  height: 200px;
-}
-
-.score,
-.high-score {
-  color: whitesmoke;
 }
 
 footer {
+  grid-area: footer;
+  padding: 10px 0;
   color: whitesmoke;
+  background-color: rgb(32, 32, 32);
+  text-align: center;
 }
 
 footer a {
