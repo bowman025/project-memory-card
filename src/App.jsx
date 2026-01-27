@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Game from './Game.jsx';
+import Sidebar from './Sidebar.jsx';
 import './App.css';
 
 function App() {
@@ -14,6 +15,15 @@ function App() {
     setDifficulty(diff);
     toggleMain();
   }
+
+  function handleHomeSelectMenu() {
+    if (!main) toggleMain();
+  }
+
+  function handleDiffSelectMenu(diff) {
+    if (main) toggleMain();
+    setDifficulty(diff);
+  }
   
   return (
     <>
@@ -22,17 +32,37 @@ function App() {
           onClick={() => main || toggleMain()} 
           style={{ cursor: 'pointer' }}
         >
-          <i>Magic</i>: The Memory Card Game
+          <span className='title'>Magic: </span>
+          <span className="subtitle">The Memory Card Game</span>
         </h1>
       </header>
       <main>
+        <Sidebar 
+          onDifficultySelect={handleDiffSelectMenu} 
+          onHome={handleHomeSelectMenu}
+        />
         {main ? (
           <div className="difficulty">
             <h2>Choose Difficulty:</h2>
             <div className="buttons">
-              <button onClick={() => handleDifficultySelect(9)}>Easy</button>
-              <button onClick={() => handleDifficultySelect(16)}>Normal</button>
-              <button onClick={() => handleDifficultySelect(36)}>Hard</button>
+              <button 
+                className="btn-easy" 
+                onClick={() => handleDifficultySelect(8)}
+                >
+                  Easy
+                </button>
+              <button 
+                className="btn-normal" 
+                onClick={() => handleDifficultySelect(15)}
+                >
+                  Normal
+              </button>
+              <button 
+                className="btn-hard" 
+                onClick={() => handleDifficultySelect(24)}
+                >
+                  Hard
+              </button>
             </div>
           </div>
         ) : (

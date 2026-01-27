@@ -1,51 +1,59 @@
 .loading,
 .error {
-  font-size: 2rem;
+  font-size: 4rem;
   color: whitesmoke;
+}
+
+.loading {
+  width: 400px;
+  animation: rotate-animation 5s linear infinite;
+  transform-origin: center;
 }
 
 .game {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
+    padding: 10px;
 }
 
 .scores {
     display: flex;
     justify-content: space-between;
-    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
     color: whitesmoke;
 }
 
-.grid9 {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.grid16 {
+.grid8 {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.grid15 {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
 }
 
-.grid36 {
+.grid24 {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   place-items: center;
   gap: 12px;
 }
 
 .card {
-  max-width: 260px;
+  max-width: 220px;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border: 3px solid whitesmoke;
   border-radius: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.1s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
@@ -53,20 +61,51 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  backface-visibility: hidden;
 }
 
 .card:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
-.card:active {
-  filter: brightness(1.15);
-  transform: scale(1.04);
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
 }
 
-.card:focus-visible {
-  outline: 3px solid gold;
-  outline-offset: 2px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: rotate(10deg) scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rotate-animation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg) }
+}
+
+@media (hover: none) {
+  .card:hover {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .grid24 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .grid8 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid15 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid24 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .scores {
+    font-size: 1.5rem;
+  }
 }

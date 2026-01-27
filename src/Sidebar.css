@@ -1,0 +1,52 @@
+.sidebar {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-btn {
+  width: auto;
+  background: #FFB100;
+  color: black;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.menu-item {
+  width: auto;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  border-color: #FFB100;
+}
+
+.menu-home {
+  background-color: #FFB100;
+}
+
+.menu-easy {
+  background-color: #FFB100;
+}
+
+.menu-normal {
+  background-color: #FFB100;
+}
+
+.menu-hard {
+  background-color: #FFB100;
+}

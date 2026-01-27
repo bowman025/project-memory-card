@@ -1,6 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import useSessionStorage from './useSessionStorage.jsx';
 import './Game.css';
+import wheelUrl from './assets/imgs/wheel.png';
+
+const mtgSets = ['ala', 'blb', 'dmu', 'eld', 'khm', 'ltr', 'mom', 'neo', 'vow', 'znr', ];
 
 const shuffleArray = (arr) => {
   const shuffled = [...arr];
@@ -11,32 +14,25 @@ const shuffleArray = (arr) => {
   return shuffled;
 };
 
+
 function Game({ difficulty }) {
-  const [imagesEasy, setImagesEasy] = useSessionStorage("images-easy", []);
-  const [imagesMedium, setImagesMedium] = useSessionStorage("images-medium", []);
-  const [imagesHard, setImagesHard] = useSessionStorage("images-hard", []);
-  const [highScoreEasy, setHighScoreEasy] = useSessionStorage("highScore-easy", 0);
-  const [highScoreMedium, setHighScoreMedium] = useSessionStorage("highScore-medium", 0);
-  const [highScoreHard, setHighScoreHard] = useSessionStorage("highScore-hard", 0);
+  const [images, setImages] = useSessionStorage("images", { 8: [], 15: [], 24: [] });
+  const [highScores, setHighScores] = useSessionStorage("highScores", { 8: 0, 15: 0, 24: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [clicked, setClicked] = useState([]);
+  const [shuffleCount, setShuffleCount] = useState(0);
 
-  const imageMap = useMemo(() => ({
-    9: [imagesEasy, setImagesEasy],
-    16: [imagesMedium, setImagesMedium],
-    36: [imagesHard, setImagesHard],
-  }), [imagesEasy, setImagesEasy, imagesMedium, setImagesMedium, imagesHard, setImagesHard]);
+  const currentImages = images[difficulty] || [];
+  const highScore = highScores[difficulty] || 0;
 
-  const [currentImages, setCurrentImages] = imageMap[difficulty] || [[], () => {}];
+  const setCurrentImages = useCallback((newImages) => {
+    setImages(prev => ({ ...prev, [difficulty]: newImages }));
+  }, [difficulty, setImages]);
 
-  const scoreMap = useMemo(() => ({
-    9: [highScoreEasy, setHighScoreEasy],
-    16: [highScoreMedium, setHighScoreMedium],
-    36: [highScoreHard, setHighScoreHard],
-  }), [highScoreEasy, setHighScoreEasy, highScoreMedium, setHighScoreMedium, highScoreHard, setHighScoreHard]);
-
-  const [highScore, setHighScore] = scoreMap[difficulty] || [0, () => {}];
+  const setHighScore = useCallback((newScore) => {
+    setHighScores(prev => ({ ...prev, [difficulty]: newScore }));
+  }, [difficulty, setHighScores]);
 
   useEffect(() => {
     setClicked([]);
@@ -46,20 +42,23 @@ function Game({ difficulty }) {
       setLoading(true);
       const fetchImages = async () => {
         try {
-          const cards = [];
-          const cardIds = new Set();
-          while (cards.length < difficulty) {
-            const response = await fetch(
-              'https://api.scryfall.com/cards/random?q=is%3Acommander'
-            );
+          // this is just to display the animation for 1 second
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          let allCards = [];
+          let randomSet = mtgSets[Math.floor(Math.random() * mtgSets.length)];
+          let nextPageUrl = `https://api.scryfall.com/cards/search?q=set:${randomSet}`;
+          while (nextPageUrl) {
+            const response = await fetch(nextPageUrl);
             const json = await response.json();
-            if (!cardIds.has(json.id) && json.image_uris?.art_crop) {
-              cards.push(json);
-              cardIds.add(json.id);
-            }
-            await new Promise(resolve => setTimeout(resolve, 100));
+            console.log(json.data);
+            allCards = [...allCards, ...json.data];
+            nextPageUrl = json.has_more ? json.next_page : null;
           }
-          setCurrentImages(cards);
+          const filtered = allCards.filter(card => card.image_uris?.art_crop);
+          const shuffled = shuffleArray(filtered);
+          const sliced = shuffled.slice(0, difficulty);
+          setCurrentImages(sliced);
         } catch (err) {
           console.error("Fetch error: ", err);
           setError("Failed to load images. Please try again.");
@@ -73,24 +72,28 @@ function Game({ difficulty }) {
     }
   }, [difficulty, currentImages.length, setCurrentImages]);
 
-  if (loading) return <p className="loading">Loading...</p>;
+  if (loading) return <div className='loading'><img src={wheelUrl} alt="Loading" /></div>;
   if (error) return <p className="error">{error}</p>;
-
+  
   return (
     <div className="game">
       <div className="scores">
-        <div className="score">Score: {clicked.length}</div>
-        <div className="high-score">High Score: {highScore}</div>
+        <div className="score"><b>Score</b>: {clicked.length}</div>
+        <div className="high-score"><b>High Score</b>: {highScore}</div>
       </div>
       <div className={`grid${difficulty}`}>
-        {currentImages.map(image => 
-          <div 
-            key={image.id} 
+        {currentImages.map((image) => 
+          <div
+            key={`${image.id}-${shuffleCount}`}
             className="card"
+            tabIndex={0}
             onClick={() => handleClick(image.id)}
+            onKeyDown={(e) => handleKeyDown(e, image.id)}
           >
-            <img src={image.image_uris.art_crop} 
-                 alt="Random MtG Commander image" 
+            <img
+                className="fade-in"
+                src={image.image_uris.art_crop} 
+                alt="Random MtG Commander image"
             />
           </div>
         )}
@@ -102,7 +105,7 @@ function Game({ difficulty }) {
     if (!clicked.includes(id)) {
       const newClickedLength = clicked.length + 1;
       setClicked(clicked => [...clicked, id]);
-      if (newClickedLength > highScore) {
+      if (newClickedLength > highScore && newClickedLength <= difficulty) {
         setHighScore(newClickedLength);
       }
     } else {
@@ -111,8 +114,16 @@ function Game({ difficulty }) {
       randomizeImages();
   }
 
+  function handleKeyDown(e, id) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick(id);
+    }
+  }
+
   function randomizeImages() {
     setCurrentImages(shuffleArray(currentImages));
+    setShuffleCount(c => c + 1);
   }
 }
 

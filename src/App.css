@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Grenze+Gotisch:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 #root {
   width: 100%;
   min-height: 100dvh;
@@ -8,62 +10,124 @@
     "header"
     "main"
     "footer";
-  background-color: rgb(48, 48, 48);
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), 
+    url('./assets/imgs/background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 header {
   grid-area: header;
   padding: 15px 0;
   color: whitesmoke;
-  background-color: rgb(32, 32, 32);
+  background-color: rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
-h1,
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+h1:hover {
+  text-shadow: 0 0 20px #1100ff;
+}
+
+.title {
+  color: #FFB100;
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  text-shadow: 1px 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.subtitle {
+  color: #F3F4F6;
+  font-family: "Grenze Gotisch", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 1px;
+  
+}
+
 h2 {
   color: whitesmoke;
+  font-size: 2.2rem;
+  text-shadow: 1px 0 15px #FFEE00;
 }
 
 main {
+  position: relative;
   grid-area: main;
   display: grid;
+  grid-template-columns: 1fr;
   place-items: center;
-  padding: 20px;
 }
 
 .difficulty {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  margin-top: 15px;
+  font-size: 1.5rem;
 }
 
 button {
+  width: 180px;
   padding: 20px;
-  transition: 0.1s transform ease-in-out;
+  border: none;
+  border-radius: 10px;
+  color: whitesmoke;
+  transition: 0.2s transform ease-in-out;
 }
 
 button:hover {
   cursor: pointer;
-  opacity: 0.9;
-  outline: 1px solid red;
-  transform: scale(1.05);
+  transform: scale(1.04);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.btn-easy {
+  background-image: linear-gradient(rgba(75, 134, 57, 1), rgba(0, 0, 0, 0.9));
+}
+
+.btn-normal {
+  background-image: linear-gradient(rgba(57, 81, 134, 1), rgba(0, 0, 0, 0.9));
+}
+
+.btn-hard {
+  background-image: linear-gradient(rgba(134, 59, 57, 1), rgba(0, 0, 0, 0.9));
 }
 
 footer {
   grid-area: footer;
   padding: 10px 0;
   color: whitesmoke;
-  background-color: rgb(32, 32, 32);
+  background-color: rgba(0, 0, 0, 0);
   text-align: center;
 }
 
 footer a {
   color: whitesmoke;
+}
+
+@media (max-width: 800px) {
+  header {
+    padding: 5px;
+    line-height: 1.2;
+  }
 }
