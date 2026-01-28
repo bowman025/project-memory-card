@@ -25,6 +25,13 @@
     color: whitesmoke;
 }
 
+.score-num,
+.highscore-num {
+  font-size: 2.2rem;
+  color: #FFB100;
+  font-weight: 600;
+}
+
 .grid8 {
   width: 100%;
   display: grid;

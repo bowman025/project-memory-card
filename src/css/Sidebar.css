@@ -1,0 +1,97 @@
+.sidebar {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  translate: 0 -45px;
+  transition: transform 0.5s ease;
+}
+
+.sidebar.open {
+  transform: translateY(45px);
+}
+
+.toggle-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 0 0 10px 10px;
+  color: black;
+  background-color: #FFB100;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.toggle-btn:hover {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+}
+
+.button-group {
+  display: flex;
+  gap: 1px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.button-group.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-item {
+  width: auto;
+  padding: 10px;
+  border: none;
+  background-color: #FFB100;
+  color: black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu-home {
+  border-bottom-left-radius: 10px;
+  
+}
+
+.menu-home:hover {
+  background-color: #FFEE00;
+}
+
+.menu-info:hover {
+  color: whitesmoke;
+  background-color: rgb(118, 57, 134);
+}
+
+.menu-easy:hover {
+  color: whitesmoke;
+  background-color: rgba(75, 134, 57, 1);
+}
+
+.menu-normal:hover {
+  color: whitesmoke;
+  background-color: rgba(57, 81, 134, 1);
+}
+
+.menu-hard {
+  border-bottom-right-radius: 10px;
+}
+
+.menu-hard:hover {
+  color: whitesmoke;
+  background-color: rgba(134, 59, 57, 1);
+}
+
+@media (max-width: 800px) {
+  .toggle-btn {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 450px) {
+  .toggle-btn {
+    padding: 4px;
+    font-size: 14px;
+  }
+}

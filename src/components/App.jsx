@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Game from './Game.jsx';
 import Sidebar from './Sidebar.jsx';
-import './App.css';
+import '../css/App.css';
 
 function App() {
   const [main, setMain] = useState(true);
@@ -44,21 +44,21 @@ function App() {
         {main ? (
           <div className="difficulty">
             <h2>Choose Difficulty:</h2>
-            <div className="buttons">
+            <div className="diff-buttons">
               <button 
-                className="btn-easy" 
+                className="diff-btn btn-easy" 
                 onClick={() => handleDifficultySelect(8)}
                 >
                   Easy
                 </button>
               <button 
-                className="btn-normal" 
+                className="diff-btn btn-normal" 
                 onClick={() => handleDifficultySelect(15)}
                 >
                   Normal
               </button>
               <button 
-                className="btn-hard" 
+                className="diff-btn btn-hard" 
                 onClick={() => handleDifficultySelect(24)}
                 >
                   Hard

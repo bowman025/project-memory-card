@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import './Sidebar.css';
+import { useState, useEffect, useRef } from 'react';
+import '../css/Sidebar.css';
+import InfoModal from './Modal';
 
 const Sidebar = ({ onDifficultySelect, onHome }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -13,22 +16,41 @@ const Sidebar = ({ onDifficultySelect, onHome }) => {
     setIsOpen(false);
   }
 
+  const handleInfoClick = () => {
+    setIsInfoOpen(true);
+    setIsOpen(false);
+  }
+
   const handleDiffClick = (n) => {
     onDifficultySelect(n);
     setIsOpen(false);
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <div className={`sidebar ${isOpen ? 'expanded' : 'collapsed'}`}>
+    <div ref={sidebarRef} className={`sidebar ${isOpen ? 'open' : ''}`}>
       <button onClick={toggleSidebar} className="toggle-btn">
         {isOpen ? '✕ Close' : '☰ Menu'}
       </button>
-      {isOpen && (
-        <div className="button-group">
+        <div className={`button-group ${isOpen ? 'open' : ''}`}>
           <button 
             className="menu-item menu-home" 
             onClick={() => handleHomeClick(onHome)}>
                 Home
+          </button>
+          <button 
+            className="menu-item menu-info" 
+            onClick={() => handleInfoClick()}>
+                Info
           </button>
           <button 
             className="menu-item menu-easy" 
@@ -46,7 +68,9 @@ const Sidebar = ({ onDifficultySelect, onHome }) => {
                 Hard
           </button>
         </div>
-      )}
+        <InfoModal 
+          isOpen={isInfoOpen} 
+          onClose={() => setIsInfoOpen(false)} />
     </div>
   );
 }

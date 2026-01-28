@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import useSessionStorage from './useSessionStorage.jsx';
-import './Game.css';
-import wheelUrl from './assets/imgs/wheel.png';
+import '../css/Game.css';
+import wheelUrl from '../assets/imgs/wheel.png';
 
 const mtgSets = ['ala', 'blb', 'dmu', 'eld', 'khm', 'ltr', 'mom', 'neo', 'vow', 'znr', ];
 
@@ -78,8 +78,8 @@ function Game({ difficulty }) {
   return (
     <div className="game">
       <div className="scores">
-        <div className="score"><b>Score</b>: {clicked.length}</div>
-        <div className="high-score"><b>High Score</b>: {highScore}</div>
+        <div className="score"><b>Score</b>: <span className="score-num">{clicked.length}</span></div>
+        <div className="high-score"><b>High Score</b>: <span className="highscore-num">{highScore}</span></div>
       </div>
       <div className={`grid${difficulty}`}>
         {currentImages.map((image) => 
