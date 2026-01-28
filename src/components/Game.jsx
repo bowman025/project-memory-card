@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import useSessionStorage from './useSessionStorage.jsx';
+import SpinningMessage from './Congrats.jsx';
 import '../css/Game.css';
 import wheelUrl from '../assets/imgs/wheel.png';
 
@@ -77,6 +78,7 @@ function Game({ difficulty }) {
   
   return (
     <div className="game">
+      {clicked.length === difficulty && <SpinningMessage />}
       <div className="scores">
         <div className="score"><b>Score</b>: <span className="score-num">{clicked.length}</span></div>
         <div className="high-score"><b>High Score</b>: <span className="highscore-num">{highScore}</span></div>

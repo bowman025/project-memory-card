@@ -1,0 +1,81 @@
+.congrats-container {
+  z-index: 1;
+  position: absolute;
+  place-self: center;
+  width: 100%;
+  padding: 10px 0;
+  color: whitesmoke;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.congrats {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+}
+
+.congrats-text {
+  position: absolute;
+  place-self: center;
+  font-family: "Grenze Gotisch", serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: 1px 0 20px rgba(255, 215, 0, 0.9);
+  letter-spacing: 1px;
+}
+
+.congrats-img {
+  width: 120px;
+  height: auto;
+}
+
+.congrats-container.entering {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.entering .congrats-img {
+  animation: spinIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.exiting .congrats-img {
+  animation: spinOut 1s ease-in forwards;
+}
+
+.congrats-container.exiting {
+  animation: fadeOut 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes spinIn {
+  from { 
+    transform: rotate(-180deg) scale(0);
+    opacity: 0;
+  }
+  to { 
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spinOut {
+  from { 
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  to { 
+    transform: rotate(180deg) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

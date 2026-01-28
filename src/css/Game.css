@@ -5,29 +5,31 @@
 }
 
 .loading {
-  width: 400px;
+  width: 350px;
   animation: rotate-animation 5s linear infinite;
   transform-origin: center;
 }
 
 .game {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  padding: 10px;
 }
 
 .scores {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    color: whitesmoke;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: whitesmoke;
+  font-family: "Grenze Gotisch", serif;
+  font-weight: 600;
+  font-size: 2rem;
 }
 
 .score-num,
 .highscore-num {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   color: #FFB100;
   font-weight: 600;
 }
