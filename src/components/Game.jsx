@@ -43,7 +43,7 @@ function Game({ difficulty }) {
       setLoading(true);
       const fetchImages = async () => {
         try {
-          // this is just to display the animation for 1 second
+          // This is just to display the animation for 1 second
           await new Promise(resolve => setTimeout(resolve, 1000));
           
           let allCards = [];
@@ -52,7 +52,6 @@ function Game({ difficulty }) {
           while (nextPageUrl) {
             const response = await fetch(nextPageUrl);
             const json = await response.json();
-            console.log(json.data);
             allCards = [...allCards, ...json.data];
             nextPageUrl = json.has_more ? json.next_page : null;
           }
