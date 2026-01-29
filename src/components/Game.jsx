@@ -43,9 +43,6 @@ function Game({ difficulty }) {
       setLoading(true);
       const fetchImages = async () => {
         try {
-          // This is just to display the animation for 1 second
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
           let allCards = [];
           let randomSet = mtgSets[Math.floor(Math.random() * mtgSets.length)];
           let nextPageUrl = `https://api.scryfall.com/cards/search?q=set:${randomSet}`;
